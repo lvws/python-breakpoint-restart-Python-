@@ -69,4 +69,3 @@ printf("good",[1,2,3,4],"jj",'dog')
 add(20)
 
 print nRunlst 
-
