@@ -4,7 +4,7 @@ Created on Sun Apr 26 15:59:55 2020
 
 @author: Administrator
 """
-import time,types,pickle,sys
+import time,types,pickle,sys,os
 
 def storeTmp():
     keys = globals().keys() # 拿到目前所有的变量（因为是动态的所以）
@@ -13,9 +13,9 @@ def storeTmp():
     for key in keys:
         if type(globals()[key]) in filterTp:
             continue
-        dic[key] = globals()[key]
+        dic['_' + key] = globals()[key]
     print dic
-    with open(sys.argv[0]+'.pkl','wb') as f:
+    with open(globals()["__recodefile"],'wb') as f:
         pickle.dump(dic,f)
 
 def logFunc(func):
@@ -25,11 +25,18 @@ def logFunc(func):
             globals().get("aRunlst").remove(func.__name__)
             print "Pass"
             return 
+        # Once going to Run new task transfer info to globals 
+        if globals()["__runtag"] == 0:            
+            for key in __dic:
+                if key == "___dic":continue
+                globals()[key[1:]] = __dic[key]
+            globals()["__runtag"] = 1
+
         now = time.time()
         print "Now Running: " + func.__name__
         func(*args,**kargs)
         print "function over,use time: " + str((time.time() - now))
-        storeTmp()
+        storeTmp() # recode every success run
     return run
 
 @logFunc
@@ -50,12 +57,30 @@ class Person():
         self.age = age
         
 
+def preRunCheck():
+    __recodefile = os.path.join(os.path.dirname(sys.argv[0]),'.'+os.path.basename(sys.argv[0])+'.pkl')
+    globals()["__recodefile"] = __recodefile
+    globals()["__runtag"] = 0
+    globals()["aRunlst"] = []
+    globals()["nRunlst"] = []
+    globals()["__dic"] = {}
+    if os.path.exists(__recodefile):
+        f = open(__recodefile,'rb')
+        globals()["__dic"] = pickle.load(f)
+        f.close()
+        globals()["aRunlst"] = [x for x in __dic["_nRunlst"]]
+
+    
+        
+
+
 
 
  # 动态记录所有的变量
-nRunlst = [] # 记录已经运行的func
-aRunlst = ['printf','add','printf'] # 模拟上一次运行过的func 列表
+#nRunlst = [] # 记录已经运行的func
+#aRunlst = ['printf','add','printf'] # 模拟上一次运行过的func 列表
 
+preRunCheck()
 name = "XiangoMin"
 age = 12 
 peple = {"name":name,"age":age}
@@ -65,8 +90,11 @@ xim = Person(name,age)
 # 运行的func    
 printf("helo",'ok','java')
 add(10)
+#sys.exit(1)
 printf("good",[1,2,3,4],"jj",'dog')
 add(20)
 
 print nRunlst 
+
+
 
