@@ -95,6 +95,9 @@ printf("good",[1,2,3,4],"jj",'dog')
 add(20)
 
 print nRunlst 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> eb4f326cfd390c22d98a1de5a62e01932f6aeae9
