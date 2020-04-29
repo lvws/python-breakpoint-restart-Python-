@@ -8,13 +8,13 @@ Created on Sun Apr 26 15:59:55 2020
 from breakRestart import *
 import os,sys
 
-@brestart.logFunc
+@Brestart.logFuncTest
 def printf(*args):
     for key in args:
         time.sleep(0.2)
         print key
 
-@brestart.logFunc
+@Brestart.logFuncTest
 def add(age):
     time.sleep(1)
     age+=1
@@ -26,7 +26,7 @@ class Person():
         self.age = age
 
 if __name__ == "__main__":
-    brestart.preRunCheck()
+    Brestart.preRunCheck()
     name = "XiangoMin"
     name = "XiangoMin"
     age = 12 
@@ -34,11 +34,11 @@ if __name__ == "__main__":
     lst = [1,2,4,'xx']
     xim = Person(name,age) 
 
-    # 运行的func    
+    # 运行的func
     printf("helo",'ok','java')
     add(10)
     #sys.exit(1)
     printf("good",[1,2,3,4],"jj",'dog')
     add(20)
 
-    brestart.end()
+    Brestart.end()
