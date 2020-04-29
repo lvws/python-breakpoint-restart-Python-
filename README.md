@@ -1,6 +1,9 @@
 # python-breakpoint-restart-Python-
 让中断的任务，可以跳过已分析的部分继续向前
 
+## 安装
+pip install Brestart
+
 ## 方法
 brestart.preRunCheck()
 在脚本运行的开始阶段检查脚本所在目录是否存在中断文件（pkl 保存 .\_\_name\_\_.pkl）；若存在这一文件，就解析文件内容，读取阶段性的运行结果。
