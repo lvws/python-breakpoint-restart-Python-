@@ -2,7 +2,8 @@
 让中断的任务，可以跳过已分析的部分继续向前
 
 ## 安装
-pip install Brestart
+pip install Brestart (python2)
+pip install Brestart2 (python3)
 
 ## 方法
 brestart.preRunCheck()
